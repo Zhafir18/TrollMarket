@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<div class="wrapper">
+    <header th:replace="~{layout :: header-layout}"></header>
+    <main>
+        <div>
+            <h4>
+                Merchandise Dependencies
+            </h4>
+        </div>
+        <div class="grid-container">
+            <div class="info-item">
+                <div>
+                    Tidak dapat menghapus atau mengupdate merchandise karena memiliki
+                    <span th:text="${dependencies}"></span>
+                    terhadap cart
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

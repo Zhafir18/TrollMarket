@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<div class="wrapper">
+    <header th:replace="~{layout :: header-layout}"></header>
+    <main>
+        <div>
+            <h4>
+                Shipment
+            </h4>
+        </div>
+        <a href="javascript:;" class="create-button green-button">Insert</a>
+        <div class="grid-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Service</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${grid}" th:object="${row}">
+                    <td>
+                        <a href="javascript:;" class="update-button green-button" th:attr="data-id=*{id}" th:if="*{isService == TRUE}">Update</a>
+                        <a th:href="@{/shipment/delete(id=*{id})}" class="green-button">Delete</a>
+                        <a class="green-button" th:if="*{isService == true}" th:href="@{/shipment/setService(id=*{id})}">Stop Service</a>
+                    </td>
+                    <td th:text="*{name}"></td>
+                    <td th:text="*{price}"></td>
+                    <td th:text="*{status}"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <div class="pagination">
+                            <div th:if="${totalPages != 0}">
+                                <a th:each="number: ${#numbers.sequence(1,totalPages)}"
+                                   th:text="${number}"
+                                   th:href="@{/shipment/index(page=${number})}">
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+</div>
+<div class="modal-layer">
+    <th:block th:replace="~{/shipment/shipment-form :: form-dialog}"></th:block>
+    <th:block th:replace="~{/shipment/shipment-dependencies :: failedDialog}"></th:block>
+</div>
+<script th:src="@{/resources/js/shipment/shipment-popup.js}"></script>
+</body>
+</html>

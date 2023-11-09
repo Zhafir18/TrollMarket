@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<div class="wrapper">
+    <header th:replace="~{layout :: header-layout}"></header>
+    <main>
+        <div>
+            <h4>
+                Profile
+            </h4>
+        </div>
+        <div class="grid-container">
+            <div class="header-info" th:object="${header}">
+                <div class="info-item">
+                    <div class="info-label">Name </div>
+                    <div>
+                        <span th:text="*{name}"></span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Role</div>
+                    <div>
+                        <span th:text="*{role}"></span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Address</div>
+                    <div>
+                        <span th:text="*{address}"></span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Balance </div>
+                    <div>
+                        <span th:text="*{#numbers.formatCurrency(balance)}"></span>
+                    </div>
+                </div>
+                <a href="javascript:;" class="topup-button green-button" th:if="*{role == 'Buyer'}" th:attr="data-id=*{username}">Top up</a>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Shipment</th>
+                    <th>Total Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${grid}" th:object="${row}">
+                    <td th:text="*{orderDate}"></td>
+                    <td th:text="*{productName}"></td>
+                    <td th:text="*{quantity}"></td>
+                    <td th:text="*{shipmentName}"></td>
+                    <td th:text="*{#numbers.formatCurrency(totalPrice)}"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <div class="pagination">
+                            <div th:if="${totalPages != 0}">
+                                <a th:each="number: ${#numbers.sequence(1,totalPages)}"
+                                   th:text="${number}"
+                                   th:href="@{/account/userProfile(page=${number}, username=${header.username})}"></a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+</div>
+<div class="modal-layer">
+    <th:block th:replace="~{/user/user-topup :: topup-dialog}"></th:block>
+</div>
+<script th:src="@{/resources/js/user/user-popup.js}"></script>
+</body>
+</html>

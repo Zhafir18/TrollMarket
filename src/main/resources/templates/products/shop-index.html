@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<div class="wrapper">
+    <header th:replace="~{layout :: header-layout}"></header>
+    <main>
+        <div>
+            <h4>
+                Shop
+            </h4>
+        </div>
+        <form class="filter" method="get" th:action="@{/product/shopIndex}">
+            <div class="info-item">
+                <div class="info-label">Product Name</div>
+                <input type="text" name="productName" th:value="${productName}">
+            </div>
+            <div class="info-item">
+                <div class="info-label">Category</div>
+                <select name="category">
+                    <option th:value="null">Select Category....</option>
+                    <option th:each="option : ${categoryDropdown}" th:value="${option.value}"
+                            th:text="${option.textContent}" th:selected="${option.value == category}">
+                    </option>
+                </select>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Description</div>
+                <input type="text" name="description" th:value="${description}">
+            </div>
+            <div class="button-end">
+                <button type="submit" class="green-button">Search</button>
+            </div>
+        </form>
+        <div class="grid-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${grid}" th:object="${row}">
+                    <td>
+                        <a  class="green-button cart-button" th:attr="data-id=*{productId}">Add to cart</a>
+                        <a href="javascript:;" class="detail-button green-button" th:attr="data-id=*{productId}">Detail</a>
+                    </td>
+                    <td th:text="*{productName}"></td>
+                    <td th:text="*{#numbers.formatCurrency(price)}"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <div class="pagination">
+                            <div th:if="${totalPages != 0}">
+                                <a th:each="number: ${#numbers.sequence(1,totalPages)}"
+                                   th:text="${number}"
+                                   th:href="@{/product/shopIndex(page=${number})}">
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+</div>
+<div class="modal-layer">
+    <th:block th:replace="~{/products/shop-detail :: detailDialog}"></th:block>
+    <th:block th:replace="~{/products/add-to-cart :: cartDialog}"></th:block>
+</div>
+<script th:src="@{/resources/js/product/product-popup.js}"></script>
+</body>
+</html>

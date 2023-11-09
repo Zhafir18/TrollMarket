@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="topup-dialog" class="popup-dialog topup-dialog">
+    <form>
+        <input type="hidden" class="username" th:field="${header.username}">
+        <table>
+            <tbody>
+            <tr>
+                <td>Tambah dana sebesar</td>
+                <td>
+                    <input type="text" class="topup moneyConversion">
+                    <div class="validation-message" data-for="topup"></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="green-button">Tambah</button>
+        <button class="green-button close-button">Close</button>
+    </form>
+</div>
+</body>
+</html>

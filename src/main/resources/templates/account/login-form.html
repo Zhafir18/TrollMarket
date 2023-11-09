@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body class="authentication-body">
+<div class="authentication-wrapper">
+    <main>
+        <h1>Sign In</h1>
+        <form method="post" th:action="@{/login}">
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <button type="submit">sign in</button>
+        </form>
+        <div class="link-container">
+            <span>Dont have any account?</span>
+            <span></span>
+            <a th:href="@{/account/registerForm}">Register</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>

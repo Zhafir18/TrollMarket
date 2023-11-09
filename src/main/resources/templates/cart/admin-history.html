@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<div class="wrapper">
+    <header th:replace="~{layout :: header-layout}"></header>
+    <main>
+        <div>
+            <h4>
+                History
+            </h4>
+        </div>
+        <form class="filter" method="get" th:action="@{/cart/historyIndex}">
+            <select name="buyerUsername">
+                <option th:value="null">Select Buyer....</option>
+                <option th:each="option : ${buyerDropdown}" th:value="${option.value}" th:text="${option.textContent}" th:selected="${option.value == selectedBuyerName}">
+                </option>
+            </select>
+            <select name="sellerUsername">
+                <option th:value="null">Select Seller....</option>
+                <option th:each="option : ${sellerDropdown}" th:value="${option.value}" th:text="${option.textContent}" th:selected="${option.value == selectedSellerName}">
+                </option>
+            </select>
+            <input type="text" name="minimum" th:value="${minimum}">
+            <input type="text" name="maximum" th:value="${maximum}">
+            <button type="submit" class="green-button">Search</button>
+        </form>
+        <a href="javascript:;" class="detail-button green-button">Detail</a>
+        <div class="grid-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Order Date</th>
+                    <th>Seller</th>
+                    <th>Buyer</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Shipment</th>
+                    <th>Total Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${grid}" th:object="${row}">
+                    <td th:text="*{orderDate}"></td>
+                    <td th:text="*{sellerName}"></td>
+                    <td th:text="*{buyerName}"></td>
+                    <td th:text="*{productName}"></td>
+                    <td th:text="*{quantity}"></td>
+                    <td th:text="*{shipmentName}"></td>
+                    <td th:text="*{#numbers.formatCurrency(totalPrice)}"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="7">
+                        <div class="pagination">
+                            <div th:if="${totalPages != 0}">
+                                <a th:each="number: ${#numbers.sequence(1,totalPages)}"
+                                   th:text="${number}"
+                                   th:href="@{/cart/historyIndex(page=${number})}">
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+</div>
+<div class="modal-layer">
+    <th:block th:replace="~{/cart/total-quantity :: detailDialog}"></th:block>
+</div>
+<script th:src="@{/resources/js/Tes/tes-nia.js}"></script>
+</body>
+</html>

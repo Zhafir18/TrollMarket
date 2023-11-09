@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<div class="wrapper">
+    <header th:replace="~{layout :: header-layout}"></header>
+    <main>
+        <div class="grid-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Nama Depan</th>
+                    <th>Nama Belakang</th>
+                    <th>Gender</th>
+                    <th>Tanggal Lahir</th>
+                    <th>Kota Lahir</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${grid}" th:object="${row}">
+                    <td th:text="*{namaDepan}"></td>
+                    <td th:text="*{namaBelakang}"></td>
+                    <td th:text="*{gender}"></td>
+                    <td th:text="*{tanggalLahir}"></td>
+                    <td th:text="*{kotaLahir}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

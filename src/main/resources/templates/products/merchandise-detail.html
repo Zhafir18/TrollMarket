@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="merchDialog" class="popup-dialog merch-dialog">
+    <form>
+        <table>
+            <tbody>
+            <tr>
+                <td>Name</td>
+                <td>
+                    <span class="name"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Category</td>
+                <td>
+                    <span class="category"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>
+                    <span class="description"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td>
+                    <span class="price"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Discontinue</td>
+                <td>
+                    <span class="isDiscontinue"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="button-end">
+            <button class="close-button green-button">Close</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

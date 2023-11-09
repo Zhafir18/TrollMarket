@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="form-dialog" class="popup-dialog form-dialog">
+    <form>
+        <table>
+            <input type="hidden" class="id">
+            <tbody>
+            <tr>
+                <td>Name</td>
+                <td>
+                    <input type="text" class="name">
+                    <div class="validation-message" data-for="name"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>Price</td>
+                <td>
+                    <input type="text" class="price">
+                    <div class="validation-message" data-for="price"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" value="true" class="isService">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="green-button">Save Shipment</button>
+        <button class="green-button close-button">Close</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<div class="wrapper">
+    <header th:replace="~{layout :: header-layout}"></header>
+    <main>
+        <div>
+            <h4>
+                My Cart
+            </h4>
+        </div>
+        <div th:if="${emptyCart == 'Your Cart Is Empty' }"></div>
+        <div class="grid-container">
+            <a th:href="@{/cart/purchaseAll(buyerUsername=${#authentication.getPrincipal().getUsername()})}" class="green-button">Purchase All</a>
+            <p class="purchase-notification" th:text="${purchaseNotification}"></p>
+            <a class="green-button" th:href="@{/account/userProfile(username=${#authentication.getPrincipal().getUsername()})}"
+               th:if="${purchaseNotification == 'Total harga melebihi balance yang ada, silahkan topup balance terlebih dahulu' }">Top Up</a>
+            <table>
+                <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Shipment</th>
+                    <th>Seller</th>
+                    <th>Total Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${grid}" th:object="${row}">
+                    <td>
+                        <a th:href="@{/cart/delete(id=*{id}, buyerUsername=${#authentication.getPrincipal().getUsername()})}" class="green-button">Delete</a>
+                    </td>
+                    <td th:text="*{product}"></td>
+                    <td th:text="*{quantity}"></td>
+                    <td th:text="*{shipment}"></td>
+                    <td th:text="*{seller}"></td>
+                    <td th:text="*{#numbers.formatCurrency(totalPrice)}"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <div class="pagination">
+                            <div th:if="${totalPages != 0}">
+                                <a th:each="number: ${#numbers.sequence(1,totalPages)}"
+                                   th:text="${number}"
+                                   th:href="@{/cart/index(page=${number})}">
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+</div>
+</body>
+</html>

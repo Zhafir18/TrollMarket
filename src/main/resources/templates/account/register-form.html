@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body class="authentication-body">
+<div class="authentication-wrapper">
+    <main>
+        <h1>Sign Up</h1>
+        <form method="post" th:action="@{/account/register}" th:object="${dto}">
+            <div class="field-validation-error" th:errors="${dto}"></div>
+
+            <input type="text" th:field="*{username}" placeholder="Username">
+            <div class="field-validation-error" th:errors="*{username}"></div>
+
+            <input type="password" th:field="*{password}" placeholder="Password">
+            <div class="field-validation-error" th:errors="*{password}"></div>
+
+            <input type="password" th:field="*{confirmPassword}" placeholder="Confirm Password">
+            <div class="field-validation-error" th:errors="*{confirmPassword}"></div>
+
+            <select th:field="*{role}">
+                <option th:each="option : ${roleDropdown}" th:value="${option.value}" th:text="${option.textContent}"></option>
+            </select>
+            <div class="field-validation-error" th:errors="*{role}"></div>
+
+            <input type="text" th:field="*{address}" placeholder="Address">
+            <div class="field-validation-error" th:errors="*{address}"></div>
+
+            <input type="text" th:field="*{name}" placeholder="name">
+            <div class="field-validation-error" th:errors="*{name}"></div>
+
+            <button type="submit">sign up</button>
+        </form>
+        <div class="link-container">
+            <span>Already have an account?</span>
+            <a th:href="@{/account/loginForm}">Login</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>

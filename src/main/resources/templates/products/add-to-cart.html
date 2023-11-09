@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<div th:fragment="cartDialog" class="popup-dialog cart-dialog">
+    <form method="post" class="upsert-form" th:action="@{/product/addToCart}">
+        <input type="hidden" class="productId">
+        <input type="hidden" class="buyerUsername" th:value="${#authentication.getPrincipal().getUsername()}" >
+        <table>
+            <tbody>
+            <tr>
+                <td>Quantity</td>
+                <td>
+                    <input type="number" class="quantity">
+                    <div class="validation-message" data-for="quantity"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>Shipment</td>
+                <td>
+                    <select class="shipmentId">
+                        <option th:value="null">Select Shipment</option>
+                        <option th:each="option : ${shipmentDropdown}"
+                                th:value="${option.value}" th:text="${option.textContent}"
+                                th:selected="${option.value == shipmentId}"
+                        ></option>
+                    </select>
+                    <div class="validation-message" data-for="shipmentId"></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="green-button" id="insert">Tambah</button>
+        <a th:href="@{/product/shopIndex}" class="green-button">Close</a>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/icon" th:href="@{/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/resources/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/resources/css/site.css}">
+    <script th:src="@{/resources/js/jquery-3.6.0.js}"></script>
+    <script th:src="@{/resources/js/site.js}" defer></script>
+    <title>Title</title>
+</head>
+<body>
+<div class="wrapper">
+    <header th:fragment="header-layout">
+        <div class="nav-bar">
+            <div>
+            <a th:href="@{/}">
+                <span>Home</span>
+            </a>
+            <a th:unless="${#strings.contains(#authentication.getAuthorities, 'Admin')}" th:href="@{/account/userProfile(username=${#authentication.getPrincipal().getUsername()})}">
+                <span>Profile</span>
+            </a>
+            <a th:if="${#strings.contains(#authentication.getAuthorities, 'Buyer')}" th:href="@{/product/shopIndex}">
+                <span>Shop</span>
+            </a>
+            <a th:if="${#strings.contains(#authentication.getAuthorities, 'Seller')}" th:href="@{/product/merchandiseIndex(username=${#authentication.getPrincipal().getUsername()})}">
+                <span>Merchandise</span>
+            </a>
+            <a th:if="${#strings.contains(#authentication.getAuthorities, 'Admin')}" th:href="@{/shipment/index}">
+                <span>Shipment</span>
+            </a>
+            <a th:if="${#strings.contains(#authentication.getAuthorities, 'Buyer')}" th:href="@{/cart/index(buyerUsername=${#authentication.getPrincipal().getUsername()})}">
+                <span>My Cart</span>
+            </a>
+            <a th:if="${#strings.contains(#authentication.getAuthorities, 'Admin')}" th:href="@{/account/registerFormAdmin}">
+                <span>Admin</span>
+            </a>
+            <a th:if="${#strings.contains(#authentication.getAuthorities, 'Admin')}" th:href="@{/cart/historyIndex}">
+                <span>History</span>
+            </a>
+<!--            <a th:href="@{/people/index}">-->
+<!--                <span>People</span>-->
+<!--            </a>-->
+            </div>
+            <div class="user-wrapper">
+                <div class="user">
+                    <p>Welcome, <span th:text="${#authentication.getPrincipal().getUsername()}"></span></p>
+                </div>
+                <div class="sign-out">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit"> <span>Sign Out</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+</body>
+</html>

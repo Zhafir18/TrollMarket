@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<div class="wrapper">
+    <header th:replace="~{layout :: header-layout}"></header>
+    <main>
+        <div>
+            <h4>
+                Merchandise
+            </h4>
+        </div>
+        <a th:href="@{/product/productInsertForm(username=${#authentication.getPrincipal().getUsername()})}" class="green-button">Insert</a>
+        <div class="grid-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Discontinue</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${grid}" th:object="${row}">
+                    <td>
+                        <a class="green-button" th:href="@{/product/productUpdateForm(username=${#authentication.getPrincipal().getUsername()}, id=*{id})}" th:if="*{isDiscontinue == FALSE}">Update</a>
+                        <a class="green-button" th:href="@{/product/delete(id=*{id}, username=${#authentication.getPrincipal().getUsername()})}">Delete</a>
+                        <a href="javascript:;" class="merch-button green-button" th:attr="data-id=*{id}">Detail</a>
+                        <a class="green-button" th:if="*{isDiscontinue == false}" th:href="@{/product/setDiscontinue(id=*{id}, username=${#authentication.getPrincipal().getUsername()})}">Discontinue</a>
+                    </td>
+                    <td th:text="*{name}"></td>
+                    <td th:text="*{category}"></td>
+                    <td th:text="*{status}"></td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <div class="pagination">
+                            <div th:if="${totalPages != 0}">
+                                <a th:each="number: ${#numbers.sequence(1,totalPages)}"
+                                   th:text="${number}"
+                                   th:href="@{/product/merchandiseIndex(page=${number})}">
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main>
+</div>
+<div class="modal-layer">
+    <th:block th:replace="~{/products/merchandise-detail :: merchDialog}"></th:block>
+</div>
+<script th:src="@{/resources/js/product/product-popup.js}"></script>
+</body>
+</html>

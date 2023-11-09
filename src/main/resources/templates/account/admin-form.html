@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head}"></head>
+<body>
+<div class="wrapper">
+    <header th:replace="~{layout :: header-layout}"></header>
+    <main>
+        <div>
+            <h4>
+                Admin
+            </h4>
+        </div>
+        <form class="upsert-form" method="post" th:action="@{/account/registerAdmin}" th:object="${dto}">
+            <div class="field-validation-error" th:errors="${dto}"></div>
+            <input type="hidden" th:field="*{role}" value="Admin">
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <label>Username</label>
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{username}" placeholder="Username">
+                        <div th:errors="*{username}" class="field-validation-error"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Password</label>
+                    </td>
+                    <td>
+                        <input type="password" th:field="*{password}" placeholder="Password">
+                        <div class="field-validation-error" th:errors="*{password}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Confirm Password</label>
+                    </td>
+                    <td>
+                        <input type="password" th:field="*{confirmPassword}" placeholder="Confirm Password">
+                        <div class="field-validation-error" th:errors="*{confirmPassword}"></div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <button type="submit" class="green-button">Save New Admin</button>
+        </form>
+    </main>
+</div>
+
+</body>
+</html>
